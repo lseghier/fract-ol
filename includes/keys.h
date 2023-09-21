@@ -6,11 +6,11 @@
 /*   By: lseghier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 03:37:36 by lseghier          #+#    #+#             */
-/*   Updated: 2023/09/16 05:38:38 by lseghier         ###   ########.fr       */
+/*   Updated: 2023/09/21 02:58:18 by lseghier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef	KEYS_H
+#ifndef KEYS_H
 # define KEYS_H
 
 # define EVENT_CLOSE_BTN 17

@@ -6,7 +6,7 @@
 /*   By: lseghier <lseghier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 01:05:19 by lseghier          #+#    #+#             */
-/*   Updated: 2023/09/20 09:46:27 by lseghier         ###   ########.fr       */
+/*   Updated: 2023/09/21 02:56:42 by lseghier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,11 @@
 # include "keys.h"
 # include "libft.h"
 
-typedef struct	s_complex
+# define MANDELBROT 1
+# define JULIA 2
+# define BURNING_SHIP 3
+
+typedef struct s_complex
 {
 	double	real;
 	double	imag;
@@ -35,7 +39,7 @@ typedef struct s_fractol
 	void	*mlx_win;
 	void	*img;
 	char	*buf;
-	int	set;
+	int		set;
 	double	zoom;
 	double	imax;
 	double	imin;

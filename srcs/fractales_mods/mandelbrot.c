@@ -6,7 +6,7 @@
 /*   By: lseghier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 00:06:47 by lseghier          #+#    #+#             */
-/*   Updated: 2023/09/13 00:34:46 by lseghier         ###   ########.fr       */
+/*   Updated: 2023/09/21 03:07:18 by lseghier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int	mandelbrot(t_complex c)
 {
-	int		i;
-	t_complex	z;
-	double		temp;
+	int				i;
+	t_complex		z;
+	double			temp;
 
 	z.real = 0;
 	z.imag = 0;
@@ -27,7 +27,7 @@ int	mandelbrot(t_complex c)
 		z.real = z.real * z.real - z.imag + c.real;
 		z.imag = 2 * temp * z.imag + c.imag;
 		if (z.real * z.real + z.imag * z.imag >= 4)
-			return i;
+			return (i);
 		i++;
 	}
 	return (MAX_ITER);

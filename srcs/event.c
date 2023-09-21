@@ -6,13 +6,13 @@
 /*   By: lseghier <lseghier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 11:45:21 by lseghier          #+#    #+#             */
-/*   Updated: 2023/09/20 13:58:34 by lseghier         ###   ########.fr       */
+/*   Updated: 2023/09/21 03:01:01 by lseghier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fractol.h"
+#include "../includes/fractol.h"
 
-static void	zoom(t_fractol *f, double zoom)
+static void	zoom (t_fractol *f, double zoom)
 {
 	double	center_r;
 	double	center_i;
@@ -71,5 +71,53 @@ static int	key_event_extend (int keycode, t_fractol *mlx)
 static int	key_event (int	keycode, t_fractol *mlx)
 {
 	if (keycode == EVENT_CLOSE_BTN)
-		exit(0); // faire une fonction qui free tout
+	{
+		end_fractol(mlx); // faire une fonction qui free tout
+
+		return (0);
+	}
+	else if (keycode == KEY_PLUS)
+		zoom(mlx, 0.9);
+	else if (keycode == KEY_MINUS)
+		zoom(mlx, 1.1);
+	else if (keycode == KEY_RIGHT)
+		move(mlx, 0.1, 'R');
+	else if (keycode == KEY_LEFT)
+		move(mlx, 0.1, 'L');
+	else if (keycode == KEY_UP)
+		move(mlx, 0.1, 'U');
+	else if (keycode == KEY_DOWN)
+		move(mlx, 0.1, 'D');
+	else if (keycode == KEY_SPACE)
+		color_shift(mlx);
+	else
+		return (key_event_extend(keycode, mlx));
+}
+
+int	mouse_event(int keycode, int x, int y, t_fractol *mlx)
+{
+	if (keycode == MOUSE_WHEEL_UP)
+	{
+		zoom(mlx, 0.5);
+		x -= WIDTH / 2;
+		y -= HEIGHT / 2;
+		if (x > 0)
+			move(mlx, 0.1, 'R');
+		else if (x < 0)
+			move(mlx, 0.1, 'L');
+	}	
+	else if (keycode == MOUSE_WHEEL_DOWN)
+		zoom(mlx, 2);
+	else if (keycode == MOUSE_BTN)
+	{
+		if (mlx->set == JULIA)
+		{
+			mlx->julia_r = (double)x / WIDTH * 2 - 1;
+			mlx->julia_i = (double)y / HEIGHT * 2 - 1;
+		}
+	}
+	else
+		return (1);
+	render(mlx);
+	return (0);
 }
