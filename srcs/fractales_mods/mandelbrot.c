@@ -3,30 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   mandelbrot.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lseghier <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lseghier <lseghier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 00:06:47 by lseghier          #+#    #+#             */
-/*   Updated: 2023/09/21 03:07:18 by lseghier         ###   ########.fr       */
+/*   Updated: 2023/09/22 07:21:40 by lseghier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "/../includes/fractol.h"
+#include "../../includes/fractol.h"
 
-int	mandelbrot(t_complex c)
+int	mandelbrot(t_fractol *c)
 {
-	int				i;
-	t_complex		z;
-	double			temp;
+	int			i;
+	double		temp;
 
-	z.real = 0;
-	z.imag = 0;
+	c->zr = 0;
+	c->zi = 0;
 	i = 0;
 	while (i < MAX_ITER)
 	{
-		temp = z.real;
-		z.real = z.real * z.real - z.imag + c.real;
-		z.imag = 2 * temp * z.imag + c.imag;
-		if (z.real * z.real + z.imag * z.imag >= 4)
+		temp = c->c_r;
+		c->zr = c->zr * c->zr - c->zi * c->zi + c->zr;
+		c->zi = 2 * temp * c->zi + c->c_i;
+		if (c->zr * c->zr + c->zi * c->zi >= 4)
 			return (i);
 		i++;
 	}

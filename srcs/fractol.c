@@ -6,43 +6,45 @@
 /*   By: lseghier <lseghier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 06:01:45 by lseghier          #+#    #+#             */
-/*   Updated: 2023/09/21 06:17:21 by lseghier         ###   ########.fr       */
+/*   Updated: 2023/09/22 08:04:04 by lseghier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-static int	type_cmp (char *av, char *str, char c, char n)
+#include "../includes/fractol.h"
+
+int	type_cmp(char *av, char *str, char c)
 {
-	int		i;
+	int	i;
 
 	i = 0;
+	if (!av || !av[i])
+		return (-1);
 	while (av[i])
 	{
-		av[] = ft_tolower(av[i]);
+		av[i] = ft_tolower(av[i]);
 		i++;
 	}
-	if (ft_strncmp(av, str, ft_strlen(str)+ 1))
-		return (0);
-	if (av[i] != c || av[i + 1] != n)
+	if (ft_strncmp(av, str, ft_strlen(str) + 1))
 		return (0);
 	return (1);
 }
 
-static void	get_set (t_fractol *f, char **av)
+void	get_set(t_fractol *f, char **av)
 {
-	if (type_cmp(av[1], "mandelbrot", 'm', '1'))
+	if (type_cmp(av[1], "mandelbrot", 'm'))
 		f->set = 1;
-	else if (type_cmp(av[1], "julia", 'j', '2'))
+	else if (type_cmp(av[1], "julia", 'j'))
 		f->set = 2;
-	else if (type_cmp(av[1], "burningship", 'b', '3'))
+	else if (type_cmp(av[1], "burningship", 'b'))
 		f->set = 3;
 	else
 	{
-		ft_putendl("usage: ./fractol [mandelbrot | julia | burningship]");
+		ft_putendl_fd("usage: ./fractol [mandelbrot | julia | burningship]", 1);
 		exit(0);
 	}
 }
 
-static void	julia_start_values (t_fractol *f, int ac, char **av)
+void	julia_start_values(t_fractol *f, int ac, char **av)
 {
 	if (ac == 3)
 	{
@@ -56,8 +58,10 @@ static void	julia_start_values (t_fractol *f, int ac, char **av)
 	}
 }
 
-static void	init_fractol (t_fractol *f, int ac, char **av)
+void	init_fractol(t_fractol *f, int ac, char **av)
 {
+	f->move_x = 0.2;
+	f->move_y = 0.2;
 	f->mlx = mlx_init();
 	f->win = mlx_new_window(f->mlx, WIDTH, HEIGHT, "fractol");
 	f->img = mlx_new_image(f->mlx, WIDTH, HEIGHT);
@@ -79,23 +83,24 @@ static void	init_fractol (t_fractol *f, int ac, char **av)
 	f->color_value = 1;
 	f->motion = 0;
 	f->motion_x = 0;
+	f->buf = NULL;
 	f->motion_y = 0;
-	if (ac == 2)
-		get_set(f, av);
-	if (f->set == 2)
-		julia_start_values(f, ac, av);
 }
 
-int			main (int ac, char **av)
+int	main(int ac, char **av)
 {
 	t_fractol	f;
 
 	init_fractol(&f, ac, av);
-	draw(&f);
-	mlx_hook(f.win, 2, 0, key_press, &f);
-	mlx_hook(f.win, 4, 0, mouse_press, &f);
-	mlx_hook(f.win, 6, 0, mouse_motion, &f);
-	mlx_hook(f.win, 17, 0, close_win, &f);
+	if (ac == 2)
+		get_set(&f, av);
+	if (f.set == 2)
+		julia_start_values(&f, ac, av);
+	render(&f);
+	mlx_hook(f.win, 2, 0, key_event, &f);
+	mlx_hook(f.win, 4, 0, mouse_event, &f);
+	mlx_hook(f.win, 6, 0, mouse_event, &f);
+	mlx_hook(f.win, 17, 0, end_fractol, &f);
 	mlx_loop(f.mlx);
 	return (0);
 }

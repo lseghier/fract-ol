@@ -6,13 +6,13 @@
 /*   By: lseghier <lseghier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 04:56:23 by lseghier          #+#    #+#             */
-/*   Updated: 2023/09/21 05:21:01 by lseghier         ###   ########.fr       */
+/*   Updated: 2023/09/22 07:49:34 by lseghier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fractol.h"
+#include "../includes/fractol.h"
 
-static void	set_pixel_color (t_fractol *f, int x, int y, int color)
+void	set_pixel_color(t_fractol *f, int x, int y, int color)
 {
 	f->buf[x * 4 + y * WIDTH * 4] = color;
 	f->buf[x * 4 + y * WIDTH * 4 + 1] = color >> 8;
@@ -20,16 +20,17 @@ static void	set_pixel_color (t_fractol *f, int x, int y, int color)
 	f->buf[x * 4 + y * WIDTH * 4 + 3] = color >> 24;
 }
 
-static int	calculate_fractal (t_fractol *f, double pr, double pi)
+int	calculate_fractal(t_fractol *frac, double pr, double pi)
 {
-	int nb_iter;
+	int	nb_iter;
 
-	if (f->set == MANDELBROT)
-		nb_iter = mandelbrot(f, pr, pi);
-	else if (f->set == JULIA)
-		nb_iter = julia (f, pr, pi);
-	else if (f->set == BURNING_SHIP)
-		nb_iter = burning_ship(f, pr, pi);
+	nb_iter = 0;
+	if (frac->set == MANDELBROT)
+		nb_iter = mandelbrot(frac);
+	else if (frac->set == JULIA)
+		nb_iter = julia(frac, pr, pi);
+	else if (frac->set == BURNING_SHIP)
+		nb_iter = burning_ship(frac, pr, pi);
 	return (nb_iter);
 }
 
@@ -41,6 +42,7 @@ void	render(t_fractol *f)
 	double	pi;
 	int		nb_iter;
 
+	nb_iter = 0;
 	y = -1;
 	while (++y < HEIGHT)
 	{
@@ -84,5 +86,3 @@ void	change_set(t_fractol *f)
 	else if (f->set == BURNING_SHIP)
 		f->set = MANDELBROT;
 }
-
-

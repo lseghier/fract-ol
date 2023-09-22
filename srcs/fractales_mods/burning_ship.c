@@ -6,13 +6,13 @@
 /*   By: lseghier <lseghier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 05:21:32 by lseghier          #+#    #+#             */
-/*   Updated: 2023/09/21 05:23:30 by lseghier         ###   ########.fr       */
+/*   Updated: 2023/09/22 07:15:44 by lseghier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fractol.h"
+#include "../../includes/fractol.h"
 
-int		burning_ship(t_fractol *f, int x, int y)
+int	burning_ship(t_fractol *f, int x, int y)
 {
 	int		i;
 	double	tmp;
