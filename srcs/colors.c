@@ -6,18 +6,18 @@
 /*   By: lseghier <lseghier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 04:56:23 by lseghier          #+#    #+#             */
-/*   Updated: 2023/09/22 07:49:34 by lseghier         ###   ########.fr       */
+/*   Updated: 2023/10/13 21:39:28 by lseghier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fractol.h"
 
-void	set_pixel_color(t_fractol *f, int x, int y, int color)
+static void	set_pixel_color(t_fractol *f, int x, int y, int color)
 {
-	f->buf[x * 4 + y * WIDTH * 4] = color;
-	f->buf[x * 4 + y * WIDTH * 4 + 1] = color >> 8;
-	f->buf[x * 4 + y * WIDTH * 4 + 2] = color >> 16;
-	f->buf[x * 4 + y * WIDTH * 4 + 3] = color >> 24;
+		f->buf[x * 4 + y * WIDTH * 4] = color;
+		f->buf[x * 4 + y * WIDTH * 4 + 1] = color >> 8;
+		f->buf[x * 4 + y * WIDTH * 4 + 2] = color >> 16;
+		f->buf[x * 4 + y * WIDTH * 4 + 3] = color >> 24;
 }
 
 int	calculate_fractal(t_fractol *frac, double pr, double pi)
@@ -53,9 +53,7 @@ void	render(t_fractol *f)
 			pi = (y - HEIGHT / 2) / (0.5 * f->zoom * HEIGHT) + f->move_y;
 			nb_iter = calculate_fractal(f, pr, pi);
 			if (nb_iter == f->max_iter)
-				set_pixel_color(f, x, y, 0);
-			else
-				set_pixel_color(f, x, y, f->color * nb_iter);
+				put_pixel(f->img, x, y, f->color * 100);
 		}
 	}
 	mlx_put_image_to_window(f->mlx, f->win, f->img, 0, 0);
@@ -86,3 +84,5 @@ void	change_set(t_fractol *f)
 	else if (f->set == BURNING_SHIP)
 		f->set = MANDELBROT;
 }
+
+

@@ -6,14 +6,14 @@
 /*   By: lseghier <lseghier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 11:45:21 by lseghier          #+#    #+#             */
-/*   Updated: 2023/09/22 07:34:53 by lseghier         ###   ########.fr       */
+/*   Updated: 2023/10/13 04:32:48 by lseghier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fractol.h"
 #include "../includes/keys.h"
 
-void	zoom(t_fractol *f, double zoom)
+static void	zoom(t_fractol *f, double zoom)
 {
 	double	center_r;
 	double	center_i;
@@ -26,7 +26,7 @@ void	zoom(t_fractol *f, double zoom)
 	f->imax = f->imin + zoom * center_i;
 }
 
-void	move(t_fractol *f, double distance, char direction)
+static void	move(t_fractol *f, double distance, char direction)
 {
 	double	center_r;
 	double	center_i;

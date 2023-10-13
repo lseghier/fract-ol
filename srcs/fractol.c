@@ -6,7 +6,7 @@
 /*   By: lseghier <lseghier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 06:01:45 by lseghier          #+#    #+#             */
-/*   Updated: 2023/09/22 08:04:04 by lseghier         ###   ########.fr       */
+/*   Updated: 2023/09/24 04:11:40 by lseghier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	init_fractol(t_fractol *f, int ac, char **av)
 	f->mlx = mlx_init();
 	f->win = mlx_new_window(f->mlx, WIDTH, HEIGHT, "fractol");
 	f->img = mlx_new_image(f->mlx, WIDTH, HEIGHT);
-	f->data = (int *)mlx_get_data_addr(f->img, &f->bpp, &f->size_l, &f->endian);
+	f->data = (int *)mlx_get_data_addr(f->img, &f->bits_per, &f->size_l, &f->endian);
 	f->set = 0;
 	f->max_iter = 50;
 	f->zoom = 1;
@@ -76,8 +76,11 @@ void	init_fractol(t_fractol *f, int ac, char **av)
 	f->c_r = 0;
 	f->c_i = 0;
 	f->mouse_x = 0;
+	f->endian = 0;
+	f->bits_per_pixel = 0;
+	f->size_line = 0;
 	f->mouse_y = 0;
-	f->color = 0;
+	f->color = 0x3545B6;
 	f->color_max = 0x000000;
 	f->color_min = 0xFFFFFF;
 	f->color_value = 1;

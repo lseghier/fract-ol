@@ -6,7 +6,7 @@
 /*   By: lseghier <lseghier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 01:05:19 by lseghier          #+#    #+#             */
-/*   Updated: 2023/09/22 07:55:01 by lseghier         ###   ########.fr       */
+/*   Updated: 2023/10/13 04:31:53 by lseghier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,54 +27,37 @@
 # define JULIA 2
 # define BURNING_SHIP 3
 
+typedef struct s_complex
+{
+	double	zr;
+	double	zi;
+}	t_complex;
+
 typedef struct s_fractol
 {
-	double	z;
-	int		max_iter;
 	void	*mlx;
 	void	*win;
 	void	*img;
 	char	*buf;
 	int		set;
-	int		*data;
-	double	zoom;
-	double	imax;
 	double	imin;
-	double	rmax;
-	double	julia_r;
-	double	julia_i;
 	double	rmin;
-	double	move_x;
-	double	move_y;
-	double	c_r;
-	double	c_i;
-	double	zr;
-	double	zi;
-	int		x;
-	int		y;
+	double	imax;
+	double	rmax;
+	double	reel_value;
+	double	imaginaire_value;
+	int		*palette;
+	int		color_pattern;
 	int		color;
-	int		color_max;
-	int		color_min;
-	int		color_value;
-	double	x1;
-	double	y1;
-	double	x2;
-	double	y2;
-	int		size_l;
-	int		bpp;
-	int		endian;
-	double	motion_x;
-	double	motion_y;
-	double	motion;
-	int		mouse_x;
-	int		mouse_y;
-}			t_fractol;
+}	t_fractol;
 
-int			mandelbrot(t_fractol *c);
+
+int			mandelbrot(t_complex *c, double cr, double ci);
 int			julia(t_fractol *f, double zr, double zi);
-int			burning_ship(t_fractol *f, int x, int y);
+int			burning_ship(t_complex *f, int x, int y);
 
-void		set_pixel_color(t_fractol *f, int x, int y, int color);
+void	put_pixel_to_image(t_fractol *img, int x, int y, int color);
+
 int			calculate_fractal(t_fractol *f, double pr, double pi);
 void		render(t_fractol *f);
 void		change_color(t_fractol *f);
