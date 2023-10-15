@@ -6,7 +6,7 @@
 /*   By: lseghier <lseghier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 04:56:23 by lseghier          #+#    #+#             */
-/*   Updated: 2023/10/13 21:39:28 by lseghier         ###   ########.fr       */
+/*   Updated: 2023/10/15 05:00:28 by lseghier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	calculate_fractal(t_fractol *frac, double pr, double pi)
 
 	nb_iter = 0;
 	if (frac->set == MANDELBROT)
-		nb_iter = mandelbrot(frac);
+		nb_iter = mandelbrot(pr, pi);
 	else if (frac->set == JULIA)
 		nb_iter = julia(frac, pr, pi);
 	else if (frac->set == BURNING_SHIP)
@@ -42,37 +42,21 @@ void	render(t_fractol *f)
 	double	pi;
 	int		nb_iter;
 
-	nb_iter = 0;
+	mlx_clear_window(f->mlx, f->win);
 	y = -1;
 	while (++y < HEIGHT)
 	{
 		x = -1;
 		while (++x < WIDTH)
 		{
-			pr = 1.5 * (x - WIDTH / 2) / (0.5 * f->zoom * WIDTH) + f->move_x;
-			pi = (y - HEIGHT / 2) / (0.5 * f->zoom * HEIGHT) + f->move_y;
+			pr = f->rmin + (double)x * (f->rmax - f->rmin) / WIDTH;
+			pi = f->imax + (double)y
+				* (f->imin - f->imax) / HEIGHT;
 			nb_iter = calculate_fractal(f, pr, pi);
-			if (nb_iter == f->max_iter)
-				put_pixel(f->img, x, y, f->color * 100);
+			set_pixel_color(f, x, y, f->palette[nb_iter]);
 		}
 	}
 	mlx_put_image_to_window(f->mlx, f->win, f->img, 0, 0);
-}
-
-void	change_color(t_fractol *f)
-{
-	if (f->color == 0x000000)
-		f->color = 0x0000FF;
-	else if (f->color == 0x0000FF)
-		f->color = 0x00FF00;
-	else if (f->color == 0x00FF00)
-		f->color = 0xFF0000;
-	else if (f->color == 0xFF0000)
-		f->color = 0xFFFF00;
-	else if (f->color == 0xFFFF00)
-		f->color = 0xFFFFFF;
-	else if (f->color == 0xFFFFFF)
-		f->color = 0x000000;
 }
 
 void	change_set(t_fractol *f)
@@ -85,4 +69,19 @@ void	change_set(t_fractol *f)
 		f->set = MANDELBROT;
 }
 
+void	color_shift(t_fractol *f)
+{
+	int	alt_color;
 
+	f->color_pattern = (f->color_pattern +1) % 3;
+	reinit_img(f);
+	if (f->color == 0x000000)
+		alt_color = 0x333333;
+	else
+		alt_color = f->color;
+	if (f->color_pattern == 0)
+		set_color_mono(f, alt_color);
+	else if (f->color_pattern == 1)
+		set_color_multiple(f, (int [4]){0x000000, alt_color,
+			get_percent_color(f->color, 50), 0xFFFFFF}, 4);
+}

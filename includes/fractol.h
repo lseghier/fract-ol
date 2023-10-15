@@ -6,7 +6,7 @@
 /*   By: lseghier <lseghier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 01:05:19 by lseghier          #+#    #+#             */
-/*   Updated: 2023/10/13 04:31:53 by lseghier         ###   ########.fr       */
+/*   Updated: 2023/10/15 05:49:20 by lseghier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,6 @@
 # define JULIA 2
 # define BURNING_SHIP 3
 
-typedef struct s_complex
-{
-	double	zr;
-	double	zi;
-}	t_complex;
-
 typedef struct s_fractol
 {
 	void	*mlx;
@@ -52,29 +46,43 @@ typedef struct s_fractol
 }	t_fractol;
 
 
-int			mandelbrot(t_complex *c, double cr, double ci);
-int			julia(t_fractol *f, double zr, double zi);
-int			burning_ship(t_complex *f, int x, int y);
+int		mandelbrot(double cr, double ci);
+int		julia(t_fractol *f, double zr, double zi);
+int		burning_ship(t_fractol *f, int x, int y);
 
-void	put_pixel_to_image(t_fractol *img, int x, int y, int color);
+int		calculate_fractal(t_fractol *frac, double pr, double pi);
+void	render(t_fractol *f);
+int		get_percent_color(int color, double percent);
+void	change_set(t_fractol *f);
+void	color_shift(t_fractol *f);
 
-int			calculate_fractal(t_fractol *f, double pr, double pi);
-void		render(t_fractol *f);
-void		change_color(t_fractol *f);
-void		change_set(t_fractol *f);
+void	get_color(t_fractol *f, int ac, char **av);
+double	ft_atof(char *str);
 
-void		zoom(t_fractol *f, double zoom);
-void		move(t_fractol *f, double distance, char direction);
-int			key_event_extend(int keycode, t_fractol *mlx);
-int			key_event(int keycode, t_fractol *mlx);
-int			mouse_event(int keycode, int x, int y, t_fractol *mlx);
+void	set_color_mono(t_fractol *f, int color);
+void	set_color_multiple(t_fractol *f, int colors[4], int n);
 
-int			type_cmp(char *av, char *str, char c);
-void		get_set(t_fractol *f, char **av);
-void		julia_start_values(t_fractol *f, int ac, char **av);
-void		init_fractol(t_fractol *f, int ac, char **av);
+void	print_fractal_options(void);
+void	print_color_options(void);
+void	print_controls(void);
+void	msg(t_fractol *f);
 
-void		clean_exit(int exit_code, t_fractol *f);
-int			end_fractol(t_fractol *mlx);
+int		key_event_extend(int keycode, t_fractol *mlx);
+int		key_event(int keycode, t_fractol *mlx);
+int		mouse_event(int keycode, int x, int y, t_fractol *mlx);
+
+void	clean_exit(int exit_code, t_fractol *f);
+int		end_fractol(t_fractol *mlx);
+int		msg2(char *str, char *str2, int errno);
+int		ft_ishexdigit(char c);
+int		ft_isspace(char c);
+int		ft_isdigit(char c);
+
+void	clean_init(t_fractol *f);
+void	get_complex_space(t_fractol *f);
+void	reinit_img(t_fractol *f);
+void	init(t_fractol *f);
+
+
 
 #endif

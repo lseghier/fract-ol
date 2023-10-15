@@ -6,7 +6,7 @@
 /*   By: lseghier <lseghier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 11:45:21 by lseghier          #+#    #+#             */
-/*   Updated: 2023/10/13 04:32:48 by lseghier         ###   ########.fr       */
+/*   Updated: 2023/10/15 05:07:21 by lseghier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,8 @@ int	key_event(int keycode, t_fractol *mlx)
 		move(mlx, 0.1, 'U');
 	else if (keycode == KEY_DOWN)
 		move(mlx, 0.1, 'D');
-	// else if (keycode == KEY_SPACE)
-	// 	color_shift(mlx);
+	else if (keycode == KEY_SPACE)
+		color_shift(mlx);
 	else
 		return (key_event_extend(keycode, mlx));
 	return (0);
@@ -110,14 +110,6 @@ int	mouse_event(int keycode, int x, int y, t_fractol *mlx)
 	}
 	else if (keycode == MOUSE_WHEEL_DOWN)
 		zoom(mlx, 2);
-	else if (keycode == MOUSE_BTN)
-	{
-		if (mlx->set == JULIA)
-		{
-			mlx->julia_r = (double)x / WIDTH * 2 - 1;
-			mlx->julia_i = (double)y / HEIGHT * 2 - 1;
-		}
-	}
 	else
 		return (1);
 	render(mlx);

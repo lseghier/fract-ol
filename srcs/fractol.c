@@ -6,7 +6,7 @@
 /*   By: lseghier <lseghier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 06:01:45 by lseghier          #+#    #+#             */
-/*   Updated: 2023/09/24 04:11:40 by lseghier         ###   ########.fr       */
+/*   Updated: 2023/10/15 04:32:24 by lseghier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,62 +48,43 @@ void	julia_start_values(t_fractol *f, int ac, char **av)
 {
 	if (ac == 3)
 	{
-		f->c_r = ft_atof(av[2]);
-		f->c_i = ft_atof(av[3]);
+		f->reel_value = ft_atof(av[2]);
+		f->imaginaire_value = ft_atof(av[3]);
 	}
 	else
 	{
-		f->c_r = -0.7;
-		f->c_i = 0.27015;
+		f->reel_value = -0.7;
+		f->imaginaire_value = 0.27015;
 	}
 }
 
-void	init_fractol(t_fractol *f, int ac, char **av)
+static void	handle_args(t_fractol *f, int ac, char **av)
 {
-	f->move_x = 0.2;
-	f->move_y = 0.2;
-	f->mlx = mlx_init();
-	f->win = mlx_new_window(f->mlx, WIDTH, HEIGHT, "fractol");
-	f->img = mlx_new_image(f->mlx, WIDTH, HEIGHT);
-	f->data = (int *)mlx_get_data_addr(f->img, &f->bits_per, &f->size_l, &f->endian);
-	f->set = 0;
-	f->max_iter = 50;
-	f->zoom = 1;
-	f->x1 = -2.1;
-	f->x2 = 0.6;
-	f->y1 = -1.2;
-	f->y2 = 1.2;
-	f->c_r = 0;
-	f->c_i = 0;
-	f->mouse_x = 0;
-	f->endian = 0;
-	f->bits_per_pixel = 0;
-	f->size_line = 0;
-	f->mouse_y = 0;
-	f->color = 0x3545B6;
-	f->color_max = 0x000000;
-	f->color_min = 0xFFFFFF;
-	f->color_value = 1;
-	f->motion = 0;
-	f->motion_x = 0;
-	f->buf = NULL;
-	f->motion_y = 0;
-}
+	get_set(f, av);
+	if (f->set != JULIA && ac > 3)
+		msg(f);
+	else if (f->set == JULIA && ac > 5)
+		msg(f);
+	julia_start_values(f, ac, av);
+	get_color(f, ac, av);
+}	
 
 int	main(int ac, char **av)
 {
 	t_fractol	f;
 
-	init_fractol(&f, ac, av);
-	if (ac == 2)
-		get_set(&f, av);
-	if (f.set == 2)
-		julia_start_values(&f, ac, av);
+	if (ac < 2)
+	{
+		clean_init(&f);
+		msg(&f);
+	}
+	clean_init(&f);
+	handle_args(&f, ac, av);
+	init(&f);
 	render(&f);
-	mlx_hook(f.win, 2, 0, key_event, &f);
-	mlx_hook(f.win, 4, 0, mouse_event, &f);
-	mlx_hook(f.win, 6, 0, mouse_event, &f);
-	mlx_hook(f.win, 17, 0, end_fractol, &f);
+	print_controls();
+	mlx_hook(f.win, EVENT_CLOSE_BTN, 0, end_fractol, &f);
+	mlx_key_hook(f.win, key_event, &f);
+	mlx_mouse_hook(f.win, mouse_event, &f);
 	mlx_loop(f.mlx);
-	return (0);
 }
