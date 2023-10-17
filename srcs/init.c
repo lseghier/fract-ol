@@ -6,7 +6,7 @@
 /*   By: lseghier <lseghier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 23:30:14 by lseghier          #+#    #+#             */
-/*   Updated: 2023/10/17 04:08:09 by lseghier         ###   ########.fr       */
+/*   Updated: 2023/10/17 04:21:42 by lseghier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	clean_init(t_fractol *f)
 {
-	
 	f->mlx = NULL;
 	f->win = NULL;
 	f->img = NULL;
@@ -33,7 +32,6 @@ void	clean_init(t_fractol *f)
 
 void	get_complex_space(t_fractol *f)
 {
-	
 	if (f->set == JULIA)
 	{
 		f->rmin = -2.0;
@@ -44,7 +42,7 @@ void	get_complex_space(t_fractol *f)
 	}
 	else if (f->set == BURNING_SHIP)
 	{
-		f->rmin= -1.0;
+		f->rmin = -1.0;
 		f->rmax = 2.5;
 		f->imin = -1.0;
 		f->imax = f->imin + (f->rmax - f->rmin)

@@ -6,7 +6,7 @@
 /*   By: lseghier <lseghier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 01:07:47 by lseghier          #+#    #+#             */
-/*   Updated: 2023/10/17 02:54:26 by lseghier         ###   ########.fr       */
+/*   Updated: 2023/10/17 04:25:15 by lseghier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	get_percent_color(int color, double percent)
 	trgb[0] = (rgb[0] + percentage) - 256;
 	trgb[1] = (rgb[1] + percentage) - 256;
 	trgb[2] = (rgb[2] + percentage) - 256;
-	return(0xFF << 24 | trgb[0] << 16 | trgb[1] << 8 | trgb[2]);
+	return (0xFF << 24 | trgb[0] << 16 | trgb[1] << 8 | trgb[2]);
 }
 
 void	set_color_mono(t_fractol *f, int color)

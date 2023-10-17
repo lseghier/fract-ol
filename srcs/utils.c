@@ -6,7 +6,7 @@
 /*   By: lseghier <lseghier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 03:23:43 by lseghier          #+#    #+#             */
-/*   Updated: 2023/10/16 18:51:07 by lseghier         ###   ########.fr       */
+/*   Updated: 2023/10/17 04:35:45 by lseghier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,22 +43,4 @@ int	msg2(char *str, char *str2, int errno)
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd(str2, 2);
 	return (errno);
-}
-
-int ft_isspace(char c)
-{
-    return (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f' || c == '\r');
-}
-
-int ft_ishexdigit(char c)
-{
-	int i;
-
-	i = 0;
-    return ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F'));
-}
-
-int ft_isdigit(char c)
-{
-	return (c >= '0' && c <= '9');
 }

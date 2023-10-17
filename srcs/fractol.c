@@ -6,7 +6,7 @@
 /*   By: lseghier <lseghier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 06:01:45 by lseghier          #+#    #+#             */
-/*   Updated: 2023/10/17 03:07:14 by lseghier         ###   ########.fr       */
+/*   Updated: 2023/10/17 04:24:32 by lseghier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	get_set(t_fractol *f, char **av)
 		f->set = 3;
 	else
 	{
-		ft_putendl_fd("usage: ./fractol [mandelbrot = M | julia = J | burning_ship = B]", 1);
+		ft_putendl_fd("mandelbrot = M | julia = J | burning_ship = B", 1);
 		exit(0);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: lseghier <lseghier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 04:56:23 by lseghier          #+#    #+#             */
-/*   Updated: 2023/10/17 02:50:48 by lseghier         ###   ########.fr       */
+/*   Updated: 2023/10/17 04:20:39 by lseghier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,5 @@ void	color_shift(t_fractol *f)
 		set_color_multiple(f, (int [8]){0xFF0000, 0xFF7F00, 0xFFFF00,
 			0x00FF00, 0x0000FF, 0x4B0082, 0x9400D3, 0xFFFFFF}, 8);
 	else if (f->color_pattern == 2)
-		set_color_contrasted(f, alt_color);	
+		set_color_contrasted(f, alt_color);
 }

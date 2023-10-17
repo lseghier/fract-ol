@@ -6,7 +6,7 @@
 /*   By: lseghier <lseghier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 11:45:21 by lseghier          #+#    #+#             */
-/*   Updated: 2023/10/17 03:48:22 by lseghier         ###   ########.fr       */
+/*   Updated: 2023/10/17 04:26:01 by lseghier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	key_event(int keycode, t_fractol *mlx)
 {
 	if (keycode == EVENT_CLOSE_BTN || keycode == KEY_ESC)
 	{
-		end_fractol(mlx); // faire une fonction qui free tout
+		end_fractol(mlx);
 		return (0);
 	}
 	else if (keycode == KEY_PLUS)
@@ -118,7 +118,7 @@ int	mouse_event(int keycode, int x, int y, t_fractol *mlx)
 	else if (keycode == MOUSE_WHEEL_DOWN)
 		zoom(mlx, 2);
 	else
-	return (1);
+		return (1);
 	render(mlx);
 	return (0);
 }
