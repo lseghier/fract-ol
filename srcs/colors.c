@@ -6,7 +6,7 @@
 /*   By: lseghier <lseghier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 04:56:23 by lseghier          #+#    #+#             */
-/*   Updated: 2023/10/15 05:00:28 by lseghier         ###   ########.fr       */
+/*   Updated: 2023/10/17 02:50:48 by lseghier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,17 @@ static void	set_pixel_color(t_fractol *f, int x, int y, int color)
 		f->buf[x * 4 + y * WIDTH * 4 + 3] = color >> 24;
 }
 
-int	calculate_fractal(t_fractol *frac, double pr, double pi)
+int	calculate_fractal(t_fractol *f, double pr, double pi)
 {
 	int	nb_iter;
 
 	nb_iter = 0;
-	if (frac->set == MANDELBROT)
+	if (f->set == MANDELBROT)
 		nb_iter = mandelbrot(pr, pi);
-	else if (frac->set == JULIA)
-		nb_iter = julia(frac, pr, pi);
-	else if (frac->set == BURNING_SHIP)
-		nb_iter = burning_ship(frac, pr, pi);
+	else if (f->set == JULIA)
+		nb_iter = julia(f, pr, pi);
+	else if (f->set == BURNING_SHIP)
+		nb_iter = burning_ship(pr, pi);
 	return (nb_iter);
 }
 
@@ -76,12 +76,14 @@ void	color_shift(t_fractol *f)
 	f->color_pattern = (f->color_pattern +1) % 3;
 	reinit_img(f);
 	if (f->color == 0x000000)
-		alt_color = 0x333333;
+		alt_color = 0x990F4B;
 	else
 		alt_color = f->color;
 	if (f->color_pattern == 0)
 		set_color_mono(f, alt_color);
 	else if (f->color_pattern == 1)
-		set_color_multiple(f, (int [4]){0x000000, alt_color,
-			get_percent_color(f->color, 50), 0xFFFFFF}, 4);
+		set_color_multiple(f, (int [8]){0xFF0000, 0xFF7F00, 0xFFFF00,
+			0x00FF00, 0x0000FF, 0x4B0082, 0x9400D3, 0xFFFFFF}, 8);
+	else if (f->color_pattern == 2)
+		set_color_contrasted(f, alt_color);	
 }

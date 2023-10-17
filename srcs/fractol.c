@@ -6,7 +6,7 @@
 /*   By: lseghier <lseghier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 06:01:45 by lseghier          #+#    #+#             */
-/*   Updated: 2023/10/15 04:32:24 by lseghier         ###   ########.fr       */
+/*   Updated: 2023/10/17 03:07:14 by lseghier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,31 +31,39 @@ int	type_cmp(char *av, char *str, char c)
 
 void	get_set(t_fractol *f, char **av)
 {
-	if (type_cmp(av[1], "mandelbrot", 'm'))
+	if (type_cmp(av[1], "m", 'M') || type_cmp(av[1], "mandelbrot", 'M'))
 		f->set = 1;
-	else if (type_cmp(av[1], "julia", 'j'))
+	else if (type_cmp(av[1], "j", 'J') || type_cmp(av[1], "julia", 'J'))
 		f->set = 2;
-	else if (type_cmp(av[1], "burningship", 'b'))
+	else if (type_cmp(av[1], "burning_ship", 'B') || type_cmp(av[1], "b", 'B'))
 		f->set = 3;
 	else
 	{
-		ft_putendl_fd("usage: ./fractol [mandelbrot | julia | burningship]", 1);
+		ft_putendl_fd("usage: ./fractol [mandelbrot = M | julia = J | burning_ship = B]", 1);
 		exit(0);
 	}
 }
 
-void	julia_start_values(t_fractol *f, int ac, char **av)
+static void	julia_start_values(t_fractol *f, int ac, char **av)
 {
+	if (f->set != JULIA || ac == 2)
+	{
+		f->reel_value = 0.254;
+		f->imaginaire_value = 0.57;
+		return ;
+	}
 	if (ac == 3)
-	{
-		f->reel_value = ft_atof(av[2]);
-		f->imaginaire_value = ft_atof(av[3]);
-	}
-	else
-	{
-		f->reel_value = -0.7;
-		f->imaginaire_value = 0.27015;
-	}
+		msg(f);
+	if (!ft_strchr(av[2], '.'))
+		msg(f);
+	if (!ft_strchr(av[3], '.'))
+		msg(f);
+	f->reel_value = ft_atof(av[2]);
+	f->imaginaire_value = ft_atof(av[3]);
+	if (f->reel_value > 2.0 || f->reel_value < -2.0)
+		msg(f);
+	if (f->imaginaire_value >= 2.0 || f->imaginaire_value <= -2.0)
+		msg(f);
 }
 
 static void	handle_args(t_fractol *f, int ac, char **av)

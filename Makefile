@@ -6,7 +6,7 @@
 #    By: lseghier <lseghier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/22 06:48:53 by lseghier          #+#    #+#              #
-#    Updated: 2023/10/15 04:41:53 by lseghier         ###   ########.fr        #
+#    Updated: 2023/10/16 16:39:20 by lseghier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ SRC_DIR		:=		srcs
 OBJ_DIR		:=		objs
 LIBFT_DIR	=		libft
 NAME		=		fractol
-SRC			=		srcs/colors.c srcs/event.c srcs/fractol.c srcs/utils.c srcs/msg.c srcs/init.c srcs/parse_args \
+SRC			=		srcs/colors.c srcs/event.c srcs/fractol.c srcs/utils.c srcs/msg.c srcs/init.c srcs/parse_args.c \
 					srcs/colors_utils.c \
 					srcs/fractales_mods/burning_ship.c srcs/fractales_mods/julia.c srcs/fractales_mods/mandelbrot.c \
 

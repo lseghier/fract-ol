@@ -6,7 +6,7 @@
 /*   By: lseghier <lseghier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 01:07:47 by lseghier          #+#    #+#             */
-/*   Updated: 2023/10/15 05:03:05 by lseghier         ###   ########.fr       */
+/*   Updated: 2023/10/17 02:54:26 by lseghier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	get_percent_color(int color, double percent)
 	trgb[0] = (rgb[0] + percentage) - 256;
 	trgb[1] = (rgb[1] + percentage) - 256;
 	trgb[2] = (rgb[2] + percentage) - 256;
-	return(0xFF << 24 | trgb[0] << 16 | trgb[1] << 8 | trg[2]);
+	return(0xFF << 24 | trgb[0] << 16 | trgb[1] << 8 | trgb[2]);
 }
 
 void	set_color_mono(t_fractol *f, int color)
@@ -56,20 +56,20 @@ void	set_color_mono(t_fractol *f, int color)
 	color1 = 0x000000;
 	color2 = color;
 	i = 0;
-	while (i < MAX_ITERATIONS)
+	while (i < MAX_ITER)
 	{
 		j = 0;
-		while (j < MAX_ITERATIONS / 2)
+		while (j < MAX_ITER / 2)
 		{
-			fraction = (double)j / (MAX_ITERATIONS / 2);
+			fraction = (double)j / (MAX_ITER / 2);
 			f->palette[i + j] = degrade(color1, color2, fraction);
 			j++;
 		}
 		color1 = color2;
-		color2 = 0xFFFFFF;
+		color2 = 0xDC143C;
 		i += j;
 	}
-	f->palette[MAX_ITERATIONS -1] = 0;
+	f->palette[MAX_ITER -1] = 0;
 }
 
 void	set_color_multiple(t_fractol *f, int colors[4], int n)
@@ -81,18 +81,42 @@ void	set_color_multiple(t_fractol *f, int colors[4], int n)
 
 	i = 0;
 	x = 0;
-	while (i < MAX_ITERATIONS)
+	while (i < MAX_ITER)
 	{
 		j = 0;
-		while ((i + j) < MAX_ITERATIONS && j < (MAX_ITERATIONS / (n - 1)))
+		while ((i + j) < MAX_ITER && j < (MAX_ITER / (n - 1)))
 		{
-			fraction = (double)j / (MAX_ITERATIONS / (n - 1));
+			fraction = (double)j / (MAX_ITER / (n - 1));
 			f->palette[i + j] = degrade(colors[x], colors[x + 1], fraction);
 			j++;
 		}
 		x++;
 		i += j;
 	}
-	f->palette[MAX_ITERATIONS - 1] = 0;
+	f->palette[MAX_ITER - 1] = 0;
 }
 
+void	set_color_contrasted(t_fractol *f, int color)
+{
+	int	i;
+	int	r;
+	int	g;
+	int	b;
+
+	r = (color >> 16) & 0xFF;
+	g = (color >> 8) & 0xFF;
+	b = (color >> 0) & 0xFF;
+	i = -1;
+	while (++i < MAX_ITER)
+	{
+		f->palette[i] = 0;
+		if (r != 0xFF)
+			r += i % 0xFF;
+		if (g != 0xFF)
+			g += i % 0xFF;
+		if (b != 0xFF)
+			b += i % 0xFF;
+		f->palette[i] = 0xFF << 24 | r << 16 | g << 8 | b;
+	}
+	f->palette[MAX_ITER - 1] = 0;
+}

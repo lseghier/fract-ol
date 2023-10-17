@@ -6,7 +6,7 @@
 /*   By: lseghier <lseghier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 03:23:43 by lseghier          #+#    #+#             */
-/*   Updated: 2023/10/15 05:48:44 by lseghier         ###   ########.fr       */
+/*   Updated: 2023/10/16 18:51:07 by lseghier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	clean_exit(int exit_code, t_fractol *f)
 {
 	if (!f)
 		exit(exit_code);
+	if (f->palette)
+		free(f->palette);
 	if (f->img)
 		mlx_destroy_image(f->mlx, f->img);
 	if (f->win && f->mlx)
@@ -50,11 +52,13 @@ int ft_isspace(char c)
 
 int ft_ishexdigit(char c)
 {
+	int i;
+
+	i = 0;
     return ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F'));
 }
 
 int ft_isdigit(char c)
 {
-    return (c >= '0' && c <= '9');
+	return (c >= '0' && c <= '9');
 }
-

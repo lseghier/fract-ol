@@ -6,7 +6,7 @@
 /*   By: lseghier <lseghier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 23:30:14 by lseghier          #+#    #+#             */
-/*   Updated: 2023/10/15 05:08:09 by lseghier         ###   ########.fr       */
+/*   Updated: 2023/10/17 04:08:09 by lseghier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ void	get_complex_space(t_fractol *f)
 	}
 	else if (f->set == BURNING_SHIP)
 	{
-		f->rmin= -2.0;
-		f->rmax = 1.0;
-		f->imin = -2.0;
+		f->rmin= -1.0;
+		f->rmax = 2.5;
+		f->imin = -1.0;
 		f->imax = f->imin + (f->rmax - f->rmin)
 			* HEIGHT / WIDTH;
 	}
@@ -54,8 +54,8 @@ void	get_complex_space(t_fractol *f)
 	{
 		f->rmin = -2.0;
 		f->rmax = 1.0;
-		f->imax = -1.5;
-		f->imin = f->imax + (f->rmax - f->rmin)
+		f->imin = -1.0;
+		f->imax = f->imin + (f->rmax - f->rmin)
 			* HEIGHT / WIDTH;
 	}
 }

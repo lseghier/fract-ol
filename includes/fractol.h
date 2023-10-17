@@ -6,7 +6,7 @@
 /*   By: lseghier <lseghier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 01:05:19 by lseghier          #+#    #+#             */
-/*   Updated: 2023/10/15 05:49:20 by lseghier         ###   ########.fr       */
+/*   Updated: 2023/10/17 02:20:11 by lseghier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ typedef struct s_fractol
 
 int		mandelbrot(double cr, double ci);
 int		julia(t_fractol *f, double zr, double zi);
-int		burning_ship(t_fractol *f, int x, int y);
-
-int		calculate_fractal(t_fractol *frac, double pr, double pi);
+//int		burning_ship(t_fractol *f, int x, int y);
+int		burning_ship(double cr, double ci);
+int		calculate_fractal(t_fractol *f, double pr, double pi);
 void	render(t_fractol *f);
 int		get_percent_color(int color, double percent);
 void	change_set(t_fractol *f);
@@ -61,6 +61,8 @@ double	ft_atof(char *str);
 
 void	set_color_mono(t_fractol *f, int color);
 void	set_color_multiple(t_fractol *f, int colors[4], int n);
+void	set_color_contrasted(t_fractol *f, int color);
+
 
 void	print_fractal_options(void);
 void	print_color_options(void);

@@ -6,7 +6,7 @@
 /*   By: lseghier <lseghier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 11:45:21 by lseghier          #+#    #+#             */
-/*   Updated: 2023/10/15 05:07:21 by lseghier         ###   ########.fr       */
+/*   Updated: 2023/10/17 03:48:22 by lseghier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ static void	zoom(t_fractol *f, double zoom)
 	double	center_r;
 	double	center_i;
 
-	center_r = (f->rmax + f->rmin);
-	center_i = (f->imax + f->imin);
+	center_r = (f->rmin - f->rmax);
+	center_i = (f->imax - f->imin);
 	f->rmax = f->rmax + (center_r - zoom * center_r) / 2;
 	f->rmin = f->rmax + zoom * center_r;
-	f->imin = f->imin - (center_r - zoom * center_r) / 2;
+	f->imin = f->imin + (center_r - zoom * center_r) / 2;
 	f->imax = f->imin + zoom * center_i;
 }
 
@@ -65,34 +65,37 @@ int	key_event_extend(int keycode, t_fractol *mlx)
 		mlx->set = BURNING_SHIP;
 	else
 		return (1);
-	// get_complex_layout(mlx);
+	get_complex_space(mlx);
 	render(mlx);
 	return (0);
 }
 
 int	key_event(int keycode, t_fractol *mlx)
 {
-	if (keycode == EVENT_CLOSE_BTN)
+	if (keycode == EVENT_CLOSE_BTN || keycode == KEY_ESC)
 	{
 		end_fractol(mlx); // faire une fonction qui free tout
 		return (0);
 	}
 	else if (keycode == KEY_PLUS)
-		zoom(mlx, 0.9);
+		zoom(mlx, 0.5);
 	else if (keycode == KEY_MINUS)
-		zoom(mlx, 1.1);
-	else if (keycode == KEY_RIGHT)
-		move(mlx, 0.1, 'R');
-	else if (keycode == KEY_LEFT)
-		move(mlx, 0.1, 'L');
-	else if (keycode == KEY_UP)
-		move(mlx, 0.1, 'U');
-	else if (keycode == KEY_DOWN)
-		move(mlx, 0.1, 'D');
+		zoom(mlx, 2);
+	else if (keycode == KEY_RIGHT || keycode == KEY_D)
+		move(mlx, 0.2, 'R');
+	else if (keycode == KEY_LEFT || keycode == KEY_A)
+		move(mlx, 0.2, 'L');
+	else if (keycode == KEY_DOWN || keycode == KEY_S)
+		move(mlx, 0.2, 'U');
+	else if (keycode == KEY_UP || keycode == KEY_W)
+		move(mlx, 0.2, 'D');
 	else if (keycode == KEY_SPACE)
 		color_shift(mlx);
+	else if (!key_event_extend(keycode, mlx))
+		return (1);
 	else
-		return (key_event_extend(keycode, mlx));
+		return (1);
+	render(mlx);
 	return (0);
 }
 
@@ -104,14 +107,18 @@ int	mouse_event(int keycode, int x, int y, t_fractol *mlx)
 		x -= WIDTH / 2;
 		y -= HEIGHT / 2;
 		if (x > 0)
-			move(mlx, 0.1, 'R');
+			move(mlx, 0.2, 'R');
 		else if (x < 0)
-			move(mlx, 0.1, 'L');
+			move(mlx, 0.2, 'L');
+		if (y > 0)
+			move(mlx, 0.2, 'D');
+		else if (y < 0)
+			move(mlx, 0.2, 'U');
 	}
 	else if (keycode == MOUSE_WHEEL_DOWN)
 		zoom(mlx, 2);
 	else
-		return (1);
+	return (1);
 	render(mlx);
 	return (0);
 }
